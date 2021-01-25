@@ -2,7 +2,7 @@ import {distanceTo} from 'geolocation-utils';
 import './App.css';
 import { useEffect, useState } from 'react';
 
-const API_URL = "http://bustime.mta.info/api/siri/stop-monitoring.json";
+const API_URL = "https://bustime.mta.info/api/siri/stop-monitoring.json";
 const york = { //401916,YORK AV/E 91 ST,40.778847,-73.945062
   monitoringRef: 401916,
   name: "YORK AV/E 91 ST",
