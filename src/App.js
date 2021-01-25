@@ -31,7 +31,7 @@ function App() {
     getLocation();
   }, []);
   useEffect(() => {
-    if (location != null) getData();
+    if (location.monitoringRef != null) getData();
   }, [location])
 
   const getLocation = () => {
@@ -64,6 +64,7 @@ function App() {
     .then(response => response.json())
     .then(data => {
       const stopVisits = data.Siri?.ServiceDelivery?.StopMonitoringDelivery?.[0]?.MonitoredStopVisit || [];
+      // console.log(data.Siri)
       // console.log(stopVisits)
       const busArr = []
       for (const visit of stopVisits) {
