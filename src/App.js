@@ -2,7 +2,7 @@ import {distanceTo} from 'geolocation-utils';
 import './App.css';
 import { useEffect, useState } from 'react';
 
-const API_URL = "https://bustime.mta.info/api/siri/stop-monitoring.json";
+const API_URL = "/api/siri/stop-monitoring.json";
 const york = { //401916,YORK AV/E 91 ST,40.778847,-73.945062
   monitoringRef: 401916,
   name: "YORK AV/E 91 ST",
@@ -60,7 +60,12 @@ function App() {
   }
 
   const getData = () => {
-    fetch(`${API_URL}?key=${process.env.REACT_APP_MTA_BUS_TIME_API_KEY}&MonitoringRef=${location.monitoringRef}`)
+    fetch(`${API_URL}?key=${process.env.REACT_APP_MTA_BUS_TIME_API_KEY}&MonitoringRef=${location.monitoringRef}`, {
+      method: "GET",
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      }
+    })
     .then(response => response.json())
     .then(data => {
       const stopVisits = data.Siri?.ServiceDelivery?.StopMonitoringDelivery?.[0]?.MonitoredStopVisit || [];
