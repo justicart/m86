@@ -2,6 +2,7 @@ import {distanceTo} from 'geolocation-utils';
 import './App.css';
 import { useEffect, useState } from 'react';
 import useInterval from './useInterval';
+import Map from './Map';
 
 // const API_URL = "https://bustime.mta.info/api/siri/stop-monitoring.json";
 const API_URL = "/.netlify/functions/node-fetch";
@@ -30,6 +31,7 @@ function App() {
   const [location, setLocation] = useState({});
   const [loadingLoc, setLoadingLoc] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
+  const [selectedBusIndex, setSelectedBusIndex] = useState();
   useEffect(() => {
     getLocation();
     
@@ -79,15 +81,17 @@ function App() {
       for (const visit of stopVisits) {
         const vehicle = visit.MonitoredVehicleJourney;
         if (vehicle.PublishedLineName === 'M86-SBS') {
-          const call = visit.MonitoredVehicleJourney?.MonitoredCall;
+          const call = vehicle.MonitoredCall;
           if (!call) return;
           const now = new Date();
           const arrival = new Date(call.AimedArrivalTime) - now;
+          const locator = vehicle.VehicleLocation;
           // console.log(new Date(call.AimedArrivalTime), now, new Date(call.AimedArrivalTime) - now)
           const text = call.Extensions?.Distances?.PresentableDistance;
           const busObj = {
             arrival,
-            text
+            text,
+            locator
           }
           busArr.push(busObj);
         }
@@ -98,10 +102,14 @@ function App() {
     .catch(err => console.error(err));
   }
 
-  const times = buses.map(bus => {
+  const times = buses.map((bus, index) => {
     const time = Math.round(getArrival(bus.arrival));
     return (
-      <div className="bus" key={bus.arrival}>
+      <div
+        className={`bus ${selectedBusIndex === index ? 'selected' : ''}`}
+        key={bus.arrival}
+        onClick={() => setSelectedBusIndex(selectedBusIndex === index ? null : index)}
+      >
         <div className="time">
           <div className="minutes">{time}</div>
           <div className="label">min</div>
@@ -109,10 +117,11 @@ function App() {
         <div className="text">{bus.text}</div>
       </div>
     )
-  })
+  });
+  const locator = selectedBusIndex != null && buses[selectedBusIndex]?.locator;
   return (
     <div className="App">
-      <header className="content">
+      <div className="content">
         <div className="header">
           <div className="title">M86+</div>
           <div className="location">
@@ -123,7 +132,10 @@ function App() {
         <div className="buses">
           {times}
         </div>
-      </header>
+        {selectedBusIndex != null && locator != null && <div className="map">
+          <Map centerTuple={location.location} locator={locator} />
+        </div>}
+      </div>
     </div>
   );
 }

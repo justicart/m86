@@ -36,6 +36,7 @@
 .buses {
   overflow-y: auto;
   padding: 165px 10px 30px;
+  flex-grow: 1;
 }
 
 .bus {
@@ -46,6 +47,9 @@
   margin-bottom: 0.7em;
   min-width: 220px;
 }
+.bus.selected {
+  background: rgb(0 158 255 / .2);
+}
 
 .time {
   background: rgb(0 158 255 / .2);
@@ -54,6 +58,9 @@
   font-weight: bold;
   line-height: 1;
   padding: 0.3em 0.6em;
+}
+.bus.selected .time {
+  color: white;
 }
 .minutes {
   font-variant-numeric: tabular-nums;
@@ -72,4 +79,16 @@
   flex-direction: column;
   justify-content: center;
   line-height: 1;
+}
+
+.map {
+  width: 100%;
+  height: 300px;
+  flex-shrink: 1;
+}
+.locator {
+  background: red;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
 }
