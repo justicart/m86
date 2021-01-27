@@ -1,6 +1,7 @@
 import {distanceTo} from 'geolocation-utils';
 import './App.css';
 import { useEffect, useState } from 'react';
+import useInterval from './useInterval';
 
 // const API_URL = "https://bustime.mta.info/api/siri/stop-monitoring.json";
 const API_URL = "/.netlify/functions/node-fetch";
@@ -27,16 +28,21 @@ function getArrival(t) {
 function App() {
   const [buses, setBuses] = useState([]);
   const [location, setLocation] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loadingLoc, setLoadingLoc] = useState(false);
+  const [loadingData, setLoadingData] = useState(false);
   useEffect(() => {
     getLocation();
+    
   }, []);
   useEffect(() => {
     if (location.monitoringRef != null) getData();
   }, [location])
+  useInterval(() => {
+    if (location.monitoringRef != null) getData();
+  }, 10000)
 
   const getLocation = () => {
-    setLoading(true);
+    setLoadingLoc(true);
     navigator.geolocation.getCurrentPosition(getClosestStop);
   }
 
@@ -56,11 +62,12 @@ function App() {
       lon: cpw.location[1]
     });
     // console.log(distanceToYork, distanceToCpw)
-    setLoading(false)
+    setLoadingLoc(false)
     return setLocation(distanceToYork > distanceToCpw ? cpw : york);
   }
 
   const getData = () => {
+    setLoadingData(true);
     fetch(`${API_URL}?key=${process.env.REACT_APP_MTA_BUS_TIME_API_KEY}&MonitoringRef=${location.monitoringRef}`)
     .then(response => response.json())
     .then(data => {
@@ -86,6 +93,7 @@ function App() {
         }
       }
       setBuses(busArr);
+      setLoadingData(false);
     })
     .catch(err => console.error(err));
   }
@@ -104,11 +112,17 @@ function App() {
   })
   return (
     <div className="App">
-      <header className="App-header">
-        <div className="title">M86+</div>
-        {loading && <div>loading...</div>}
-        <div className="location">{location.name}</div>
-        {times}
+      <header className="content">
+        <div className="header">
+          <div className="title">M86+</div>
+          <div className="location">
+            {loadingLoc ? 'getting location...' : location.name}
+          </div>
+        </div>
+        {/* {loadingData && <div>loading data...</div>} */}
+        <div className="buses">
+          {times}
+        </div>
       </header>
     </div>
   );
