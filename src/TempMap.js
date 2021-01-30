@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl-unminified';
 import './Temp.css';
 
 mapboxgl.accessToken =
