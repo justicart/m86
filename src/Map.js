@@ -1,5 +1,4 @@
 import {useEffect, useRef, useState} from 'react';
-import ReactMap, { Layer, Feature } from 'react-mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 // import { Map, Marker, Overlay } from 'pigeon-maps';
