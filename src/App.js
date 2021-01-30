@@ -130,7 +130,7 @@ function App() {
           {times}
         </div>
         <div className="map">
-          <Map center={location.location} locator={locator} />
+          {location.location != null && <MapComp center={location.location} locator={locator} />}
         </div>
       </div>
     </div>
