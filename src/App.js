@@ -2,7 +2,7 @@ import {distanceTo} from 'geolocation-utils';
 import './App.css';
 import { useEffect, useState } from 'react';
 import useInterval from './useInterval';
-import Map from './Map';
+import MapComp from './Map';
 
 // const API_URL = "https://bustime.mta.info/api/siri/stop-monitoring.json";
 const API_URL = "/.netlify/functions/node-fetch";
