@@ -18,7 +18,7 @@ export default function MapComp({center, locator}) {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/dark-v10',
-      center: [-79.38, 43.65],
+      center: [lng, lat],
       zoom: zoom
     });
 
