@@ -18,7 +18,7 @@ export default function Map({center, locator}) {
   return (
     <Mapbox
       // eslint-disable-next-line
-      style="mapbox://styles/mapbox/dark-v10?optimize=true"
+      style="mapbox://styles/mapbox/streets-v10?optimize=true"
       containerStyle={{
         height: '100%',
         width: '100%'
@@ -32,7 +32,7 @@ export default function Map({center, locator}) {
       <Layer type="symbol" id="stop" layout={{ 'icon-image': 'dot-11' }}>
         <Feature coordinates={reversedCenter} />
       </Layer>
-      {locator != null && <Layer type="symbol" id="bus" layout={{ 'icon-image': 'bus' }}>
+      {locator != null && <Layer type="symbol" id="bus" layout={{ 'icon-image': 'bus-15' }}>
         <Feature coordinates={reversedMarkerCoord} />
       </Layer>}
     </Mapbox>
