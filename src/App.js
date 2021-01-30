@@ -33,8 +33,8 @@ function App() {
   const [loadingData, setLoadingData] = useState(false);
   const [selectedBusIndex, setSelectedBusIndex] = useState();
   useEffect(() => {
-    getLocation();
-    // setLocation(york);
+    // getLocation();
+    setLocation(york);
   }, []);
   useEffect(() => {
     if (location.monitoringRef != null) getData();

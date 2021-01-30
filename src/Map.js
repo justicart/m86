@@ -1,5 +1,6 @@
 import ReactMap, { Layer, Feature } from 'react-mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+// import { Map, Marker, Overlay } from 'pigeon-maps';
 import logo from './logo.svg';
 
 const Mapbox = ReactMap({
@@ -19,6 +20,7 @@ export default function Map({center, locator}) {
     <Mapbox
       // eslint-disable-next-line
       style="mapbox://styles/mapbox/streets-v10?optimize=true"
+      style="mapbox://styles/mapbox/dark-v10?optimize=true"
       containerStyle={{
         height: '100%',
         width: '100%'
@@ -28,13 +30,21 @@ export default function Map({center, locator}) {
         maxZoom: zoom,
         padding: {top: pad, bottom: pad, left: pad, right: pad}
         }}
+      // fitBounds={fit}
+      // fitBoundsOptions={{
+      //   maxZoom: zoom,
+      //   padding: {top: pad, bottom: pad, left: pad, right: pad}
+      //   }}
     >
       <Layer type="symbol" id="stop" layout={{ 'icon-image': 'dot-11' }}>
+      {/* <Layer type="symbol" id="stop" layout={{ 'icon-image': 'dot-11' }}>
         <Feature coordinates={reversedCenter} />
       </Layer>
       {locator != null && <Layer type="symbol" id="bus" layout={{ 'icon-image': 'bus-15' }}>
+      {locator != null && <Layer type="symbol" id="bus" layout={{ 'icon-image': 'bus' }}>
         <Feature coordinates={reversedMarkerCoord} />
       </Layer>}
+      </Layer>} */}
     </Mapbox>
   )
 }
