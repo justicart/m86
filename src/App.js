@@ -75,8 +75,6 @@ function App() {
     .then(data => {
       const stopVisits = data.Siri?.ServiceDelivery?.StopMonitoringDelivery?.[0]?.MonitoredStopVisit || [];
       // console.log(data.Siri)
-      // console.log(stopVisits)
-      // console.log(data)
       const busArr = []
       for (const visit of stopVisits) {
         const vehicle = visit.MonitoredVehicleJourney;
@@ -86,7 +84,6 @@ function App() {
           const now = new Date();
           const arrival = new Date(call.AimedArrivalTime) - now;
           const locator = vehicle.VehicleLocation;
-          // console.log(new Date(call.AimedArrivalTime), now, new Date(call.AimedArrivalTime) - now)
           const text = call.Extensions?.Distances?.PresentableDistance;
           const busObj = {
             arrival,
@@ -118,23 +115,23 @@ function App() {
       </div>
     )
   });
-  const locator = selectedBusIndex != null && buses[selectedBusIndex]?.locator;
+  const locator = selectedBusIndex != null ? buses[selectedBusIndex]?.locator : null;
+
   return (
     <div className="App">
       <div className="content">
         <div className="header">
-          <div className="title">M86+</div>
+          <div className={`title ${loadingData ? 'loading' : ''}`}>M86+</div>
           <div className="location">
             {loadingLoc ? 'getting location...' : location.name}
           </div>
         </div>
-        {/* {loadingData && <div>loading data...</div>} */}
         <div className="buses">
           {times}
         </div>
-        {selectedBusIndex != null && locator != null && <div className="map">
-          <Map centerTuple={location.location} locator={locator} />
-        </div>}
+        <div className="map">
+          <Map center={location.location} locator={locator} />
+        </div>
       </div>
     </div>
   );
