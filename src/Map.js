@@ -7,7 +7,7 @@ const Mapbox = ReactMap({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN
 });
 
-export default function Map({center, locator}) {
+export default function MapComp({center, locator}) {
   if (center == null) return null;
   const zoom = [15];
   const reversedCenter = [center[1], center[0]];
@@ -19,32 +19,31 @@ export default function Map({center, locator}) {
   return (
     <Mapbox
       // eslint-disable-next-line
-      style="mapbox://styles/mapbox/streets-v10?optimize=true"
       style="mapbox://styles/mapbox/dark-v10?optimize=true"
       containerStyle={{
         height: '100%',
         width: '100%'
       }}
-      fitBounds={fit}
-      fitBoundsOptions={{
-        maxZoom: zoom,
-        padding: {top: pad, bottom: pad, left: pad, right: pad}
-        }}
       // fitBounds={fit}
       // fitBoundsOptions={{
       //   maxZoom: zoom,
       //   padding: {top: pad, bottom: pad, left: pad, right: pad}
       //   }}
     >
-      <Layer type="symbol" id="stop" layout={{ 'icon-image': 'dot-11' }}>
       {/* <Layer type="symbol" id="stop" layout={{ 'icon-image': 'dot-11' }}>
         <Feature coordinates={reversedCenter} />
       </Layer>
-      {locator != null && <Layer type="symbol" id="bus" layout={{ 'icon-image': 'bus-15' }}>
       {locator != null && <Layer type="symbol" id="bus" layout={{ 'icon-image': 'bus' }}>
         <Feature coordinates={reversedMarkerCoord} />
-      </Layer>}
       </Layer>} */}
     </Mapbox>
+    // PIGEON
+    // <Map defaultCenter={center} defaultZoom={zoom}>
+    //   <Marker anchor={center} payload={1} onClick={({ event, anchor, payload }) => {}} />
+      
+    //   {locator != null && <Overlay anchor={[locator.Latitude, locator.Longitude]} offset={[0, 0]}>
+    //     <img src={logo} width={240} height={158} alt='' />
+    //   </Overlay>}
+    // </Map>
   )
 }
