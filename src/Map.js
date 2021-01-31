@@ -33,9 +33,16 @@ export default function Map({center, locator, height}) {
       <Layer type="symbol" id="stop" layout={{ 'icon-image': 'dot-11' }}>
         <Feature coordinates={reversedCenter} />
       </Layer>
-      {locator != null && <Layer type="symbol" id="bus" layout={{ 'icon-image': 'bus' }}>
+      <Layer
+        type="symbol"
+        id="bus"
+        layout={{ 
+          'icon-image': 'bus', 
+          visibility: locator != null ? 'visible' : 'none' 
+        }}
+      >
         <Feature coordinates={reversedMarkerCoord} />
-      </Layer>}
+      </Layer>
     </Mapbox>
   )
 }
