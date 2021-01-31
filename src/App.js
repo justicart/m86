@@ -50,8 +50,8 @@ function App() {
   const [selectedBusIndex, setSelectedBusIndex] = useState();
   const [box, heightRef] = useRect();
   useEffect(() => {
-    // getLocation();
-    setLocation(york);
+    getLocation();
+    // setLocation(york);
   }, []);
   useEffect(() => {
     if (location.monitoringRef != null) getData();
