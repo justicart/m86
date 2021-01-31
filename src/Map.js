@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl-unminified';
 // import { Map, Marker, Overlay } from 'pigeon-maps';
 import logo from './logo.svg';
 
@@ -19,6 +19,11 @@ export default function MapComp({center, locator}) {
       style: 'mapbox://styles/mapbox/dark-v10',
       center: [lng, lat],
       zoom: zoom
+      // fitBounds: fit,
+      // fitBoundsOptions: {
+      //   maxZoom: zoom,
+      //   padding: {top: pad, bottom: pad, left: pad, right: pad}
+      // },
     });
 
     // Add navigation control (the +/- zoom buttons)
