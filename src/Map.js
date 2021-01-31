@@ -6,14 +6,14 @@ const Mapbox = ReactMap({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN
 });
 
-export default function Map({center, locator}) {
+export default function Map({center, locator, topPad}) {
   if (center == null) return null;
   const zoom = [15];
   const reversedCenter = [center[1], center[0]];
   const reversedMarkerCoord = locator ? [locator.Longitude, locator.Latitude] : null;
 
   const fit = locator != null ? [reversedCenter, reversedMarkerCoord] : [reversedCenter, reversedCenter];
-  const pad = 35;
+  const pad = 45;
 
   return (
     <Mapbox
@@ -26,7 +26,7 @@ export default function Map({center, locator}) {
       fitBounds={fit}
       fitBoundsOptions={{
         maxZoom: zoom,
-        padding: {top: pad, bottom: pad, left: pad, right: pad}
+        padding: {top: topPad, bottom: pad, left: pad, right: pad}
         }}
     >
       <Layer type="symbol" id="stop" layout={{ 'icon-image': 'dot-11' }}>

@@ -3,11 +3,11 @@
 }
 
 .content {
-  min-height: 100vh;
-  max-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
   /* justify-content: center; */
   font-size: calc(15px + 2vmin);
   color: white;
@@ -15,10 +15,9 @@
 }
 
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
+  max-height: 400px;
+  overflow-y: auto;
   padding: 3.6em 10px 10px;
   background: rgb(40 44 52 / 80%);
   box-sizing: border-box;
@@ -39,9 +38,7 @@
 }
 
 .buses {
-  overflow-y: auto;
-  padding: 7.5em 10px 1em;
-  flex-grow: 1;
+  padding: 30px 50px 1em;
 }
 
 .bus {
@@ -87,7 +84,6 @@
 }
 
 .map {
-  width: 100%;
-  height: 300px;
-  flex-shrink: 1;
+  width: 100vw;
+  height: 100vh;
 }

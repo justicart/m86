@@ -1,9 +1,8 @@
 import {distanceTo} from 'geolocation-utils';
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useInterval from './useInterval';
 import MapComp from './Map';
-import TempMap from './TempMap';
 
 // const API_URL = "https://bustime.mta.info/api/siri/stop-monitoring.json";
 const API_URL = "/.netlify/functions/node-fetch";
@@ -17,6 +16,22 @@ const cpw = { // 401927,W 86 ST/CENTRAL PK W,40.785700,-73.970102
   name: "W 86 ST/CENTRAL PK W",
   location: [40.785700,-73.970102]
 }
+
+export const useRect = () => {
+  const ref = useRef();
+  const [box, setBox] = useState({});
+
+  const set = () =>
+    setBox(ref && ref.current ? ref.current.getBoundingClientRect() : {});
+
+  useEffect(() => {
+    set();
+    window.addEventListener('resize', set);
+    return () => window.removeEventListener('resize', set);
+  }, []);
+
+  return [box, ref];
+};
 
 function getArrival(t) {
   let time = t;
@@ -33,6 +48,7 @@ function App() {
   const [loadingLoc, setLoadingLoc] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
   const [selectedBusIndex, setSelectedBusIndex] = useState();
+  const [box, heightRef] = useRect();
   useEffect(() => {
     // getLocation();
     setLocation(york);
@@ -118,22 +134,30 @@ function App() {
   });
   const locator = selectedBusIndex != null ? buses[selectedBusIndex]?.locator : null;
 
+  const height = box.height || 300;
+
   return (
     <div className="App">
+      <div className="map">
+        {location.location != null && 
+          <MapComp
+            center={location.location}
+            locator={locator}
+            topPad={height}
+          />
+        }
+      </div>
       <div className="content">
-        {/* <TempMap /> */}
-        <div className="header">
+        <div className="header" ref={heightRef}>
           <div className={`title ${loadingData ? 'loading' : ''}`}>M86+</div>
           <div className="location">
             {loadingLoc ? 'getting location...' : location.name}
           </div>
+          <div className="buses">
+            {times}
+          </div>
         </div>
-        <div className="buses">
-          {times}
-        </div>
-        <div className="map">
-          {location.location != null && <MapComp center={location.location} locator={locator} />}
-        </div>
+        
       </div>
     </div>
   );
