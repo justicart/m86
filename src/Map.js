@@ -6,7 +6,7 @@ const Mapbox = ReactMap({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN
 });
 
-export default function Map({center, locator, topPad}) {
+export default function Map({center, locator, height}) {
   if (center == null) return null;
   const zoom = [15];
   const reversedCenter = [center[1], center[0]];
@@ -14,6 +14,7 @@ export default function Map({center, locator, topPad}) {
 
   const fit = locator != null ? [reversedCenter, reversedMarkerCoord] : [reversedCenter, reversedCenter];
   const pad = 45;
+  const topPad = height + pad;
 
   return (
     <Mapbox

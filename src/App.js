@@ -143,7 +143,7 @@ function App() {
           <MapComp
             center={location.location}
             locator={locator}
-            topPad={height}
+            height={height}
           />
         }
       </div>
