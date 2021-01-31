@@ -11,10 +11,10 @@ const york = { //401916,YORK AV/E 91 ST,40.778847,-73.945062
   name: "YORK AV/E 91 ST",
   location: [40.778847,-73.945062]
 };
-const cpw = { // 401927,W 86 ST/CENTRAL PK W,40.785700,-73.970102
-  monitoringRef: 401927,
+const cpw = { // 401899,W 86 ST/CENTRAL PK W,40.785289,-73.969373
+  monitoringRef: 401899,
   name: "W 86 ST/CENTRAL PK W",
-  location: [40.785700,-73.970102]
+  location: [40.785289,-73.969373]
 }
 
 export const useRect = () => {
